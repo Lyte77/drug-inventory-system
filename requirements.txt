@@ -1,0 +1,4 @@
+pillow
+django-htmx
+streamlit
+plotly

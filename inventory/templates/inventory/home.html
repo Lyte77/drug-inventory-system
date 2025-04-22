@@ -1,0 +1,43 @@
+{% extends "inventory/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Home Page</h1>
+<p>Welcome to your management system</p>
+
+{% for drug in drugs %}
+    <li>
+        <a href="{% url 'edit-drug' drug.pk%}">
+        {{ drug }}: {{ drug.quantity }} 
+        </a>: <a href="{% url 'delete-drug' drug.pk%}">
+                Del 
+            </a>
+    </li>
+{% endfor %}
+
+<p>Total number of drugs: {{ total_drugs }}</p>
+<p>Total Orders: {{ total_orders }}</p>
+
+<h2>Ordered Drugs</h2>
+<div class="orders">
+
+    {% for order in orders %}
+        <li>{{ order.customer_name }} ordered for {{ order.quantity}}
+            packs of {{ order.drug }} ({{ order.drug.price }})  = {{ order.get_total_price }}
+         </li>
+         
+    {% endfor %}
+    <p>Total OrderSummary</p>
+    <p> Customer:{{ customer_name }}</p>
+    <p> Total:{{ total_price }}</p>
+    <p>Total: {{ total_payment }}</p>
+</div>
+
+
+
+
+
+    
+
+{% endblock content %}
