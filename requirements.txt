@@ -2,3 +2,5 @@ pillow
 django-htmx
 streamlit
 plotly
+django-compressor
+django-htmx

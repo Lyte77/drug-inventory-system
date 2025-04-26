@@ -7,6 +7,8 @@ urlpatterns = [
     path('drug/<int:pk>/edit', edit_drug,name='edit-drug'),
     path('drug/<int:pk>/delete', delete_drug,name='delete-drug'),
     path('add-order/', add_order,name='add-order'),
+    path('order/<int:pk>/edit', edit_order,name='edit-order'),
+    # path('signup/', signup, name='signup'),
 
 
 ]

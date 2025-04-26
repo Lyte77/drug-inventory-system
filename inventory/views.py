@@ -15,6 +15,15 @@ def home_view(request):
   orders = Order.objects.all()
   total_orders = Order.objects.all().count()
   total_payment = sum(order.get_total_price() for order in orders )
+  total_company_payment =  sum(order.get_company_price() for order in orders)
+  profit = total_payment - total_company_payment
+  total_debt = sum(order.balance_due() for order in orders )
+  form = AddOrderform
+
+  
+#   if is_debtor:
+#     return True
+
   
    
   context = {'drugs':drugs,
@@ -22,6 +31,12 @@ def home_view(request):
             'total_drugs':total_drugs, 
             'total_payment':total_payment,
             'total_orders':total_orders,
+            'total_company_payment':total_company_payment,
+            'profit':profit,
+            'total_debt':total_debt,
+            'form': form,
+            
+
             
             }
 
@@ -74,11 +89,28 @@ def delete_drug(request,pk):
     
 
 def add_order(request):
+ 
+    form = AddOrderform(request.POST)
+    if not form.is_valid():
+        # on validation errors, re-render form (you can also send status=400)
+        return render(request, 'includes/signup_modal.html', {'form': form}, status=400)
+
+    # save and grab the instance
+    order = form.save()
+
+    # render just the new row
+    return render(request, 'partials/order_row.html', {'order': order})
+
+def edit_order(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+
     if request.method == 'POST':
-        form = AddOrderform(request.POST)
+        form = AddOrderform(request.POST, instance=order)
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
-        form = AddOrderform()
-    return render(request, 'inventory/add_order.html', {'form':form})
+        form = AddOrderform(instance=order)
+    
+    return render(request, 'inventory/add_drug.html', {'form':form})
+
