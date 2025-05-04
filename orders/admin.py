@@ -1,4 +1,5 @@
 from django.contrib import admin
+from inventory.models import Drug
 from .models import (
     Drug,
     Order
@@ -13,22 +14,5 @@ class OrderAdmin(admin.ModelAdmin):
     
 
 
-admin.site.register(Drug)
+
 admin.site.register(Order,OrderAdmin)
-
-
-from django.contrib import admin
-from .models import (
-    Drug,
-   
-    
-)
-
-admin.site.register(Drug)
-
-
-    
-
-
-
-
